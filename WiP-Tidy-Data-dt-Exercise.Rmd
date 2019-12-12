@@ -184,6 +184,108 @@ WP[Country %in% "Portugal"] %>%
   ylab("% Women in Parliament")
 ```
 
+## Portugal versus European Union (EU) countries
+
+```{r}
+WP[Country %in% c("Portugal", "Sweden", "Spain", 
+                  "Hungary", "Romania", "Finland", 
+                  "Germany", "European Union")] %>% 
+  ggplot(aes(Year, pctWiP, colour=Country)) + 
+  geom_line() + geom_point() + 
+  scale_x_continuous(breaks=seq(1990, 2020, 5)) + 
+  scale_y_continuous(limits=c(0, 50), 
+                     breaks=seq(0, 50, by=10)) + 
+  ggtitle("Women in Parliament: EU Countries") + 
+  ylab("% Women in Parliament")
+
+```
+
+### Exercise
+
+Compare the country of your choice to four or ﬁve other countries by plotting a line graph similar to the one above.
+
+```{r}
+WP[Country %in% c("Portugal", "Spain", 
+                  "France", "United Kingdom", "Luxembourg")] %>% 
+  ggplot(aes(Year, pctWiP, colour=Country)) + 
+  geom_line() + geom_point() + 
+  scale_x_continuous(breaks=seq(1990, 2020, 5)) + 
+  scale_y_continuous(limits=c(0, 50), 
+                     breaks=seq(0, 50, by=10)) + 
+  ggtitle("Women in Parliament: EU Countries") + 
+  ylab("% Women in Parliament")
+```
+
+## Countries with the highest percentage of women in parliament
+
+```{r}
+WP[order(-pctWiP), head(.SD, 10)] 
+```
+
+## Highest percentage by year
+
+```{r}
+WP[order(Year, -pctWiP), head(.SD, 1), by = Year] 
+```
+
+## Merging continent
+
+```{r}
+# Ensure that ’countrycode’ package is installed. 
+# install.packages("countrycode")
+
+library(countrycode) 
+cl <- as.data.table(codelist)[, .(continent, wb)] 
+setnames(cl, c("continent", "wb"), 
+         c("Continent", "Code")) 
+cWP <- cl[WP, on="Code"]
+```
+
+## Highest percentages by year and continent
+
+```{r}
+cWP[Year %in% c(1990, 2018) & !is.na(Continent)][ 
+  order(Year, -pctWiP), head(.SD, 1), 
+  by = .(Year, Continent)][ 
+  order(Continent, Year), 
+  .(Continent, Year, Country, pctWiP)] 
+```
+
+## Decline in percentage
+
+```{r}
+dWP <- cWP[ 
+  order(Country, Year), .SD[c(1,.N)], 
+  by=Country][, 
+  pctDiff := pctWiP - shift(pctWiP), by=Country][ 
+  pctDiff<0][ 
+  order(pctDiff)] 
+
+dWP[!is.na(Continent), 
+    .(Country, pctWiP, pctDiff)] 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
