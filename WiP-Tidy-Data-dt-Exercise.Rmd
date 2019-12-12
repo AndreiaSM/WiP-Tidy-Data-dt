@@ -184,6 +184,8 @@ WP[Country %in% "Portugal"] %>%
   ylab("% Women in Parliament")
 ```
 
+*Interpretation.* In 1990 Portugal had 7.6% women in parliament (i.e. 12.2 men for each woman), which increased to 34.8% (i.e. 1.87 men for each woman) in 2018. This still falls short of 50% (i.e. point of gender parity in parliament).
+
 ## Portugal versus European Union (EU) countries
 
 ```{r}
@@ -199,6 +201,9 @@ WP[Country %in% c("Portugal", "Sweden", "Spain",
   ylab("% Women in Parliament")
 
 ```
+
+*Interpretation.* Since2007Portugalhashadmorewomeninparliament than the European Union average. Hungary and Romania both had a higher percentage of women in parliament in 1990 (aroundtheendoftheColdWar)thantheyhavehadsince. The key point to note is that none of these countries reaches equality between males and females in parliament, although Sweden and Finland come closest.
+
 
 ### Exercise
 
@@ -283,6 +288,9 @@ WP[Country %in% dclpct] %>%
 
 ```
 
+*Interpretation.* There is a consistent decline between 1990 and 1997 that should be investigated in collaboration with a subject matter expert to understand the potential causes.
+
+
 ## Global ranks by year
 
 ```{r}
@@ -299,6 +307,9 @@ cWP[Country=="Portugal",
     .(Country, Year, pctWiP, Ratio, RankG, TotalG)][ 
       order(Year)] 
 ```
+
+*Interpretation.* Portugalhasgenerallybeenrankedintheﬁrstquartile (25%) of countries in the world, with the ﬂuctuations of its ranking most likely due to random variation.
+
 
 ## Continent ranks by year
 
@@ -333,6 +344,9 @@ cWP[Country %in% c("Portugal", "Sweden",
 
 ```
 
+*Interpretation.* A total of 28 European countries had data in 1990, 39 in 1997 and 43 in 2018. Within Europe, Portugal was typically ranked in the second quartile (25-50%) with the ﬂuctuations of its ranking most likely due to random variation.
+
+
 ## Highest rank by year and continent
 
 ```{r}
@@ -358,8 +372,9 @@ cWP[is.na(Continent)] %>%
 
 ```
 
+*Interpretation.* The grey lines show that regardless of how we deﬁne region the general trends are upwards. The “World” percentage(blackline)increasedbetween1997and2018. In2018, women in parliament represented 24% (i.e. a ratio of 3.17 men to each woman), which is still less than half the level before gender parity can be claimed.
+
 
 ```{r imageEnd, echo=FALSE, out.width="60%"}
 knitr::include_graphics("images/Women_in_Parliament_rect.svg")
 ```
-
